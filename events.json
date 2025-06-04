@@ -3,8 +3,8 @@
     "Location": "Eberswalde",
     "Time": "2025-06-10T14:00:00",
     "Geolocation": {
-      "Latitude": 52.520008,
-      "Longitude": 13.404954
+      "Latitude": 52.8333,
+      "Longitude": 13.8167
     },
     "Organizer": {
       "Name": "Anna Müller",
@@ -30,8 +30,8 @@
     "Location": "Senftenberg",
     "Time": "2025-06-12T16:00:00",
     "Geolocation": {
-      "Latitude": 51.339695,
-      "Longitude": 12.373075
+      "Latitude": 51.5072,
+      "Longitude": 14.0011
     },
     "Organizer": {
       "Name": "Max Mustermann",
@@ -57,8 +57,8 @@
     "Location": "Görlitz",
     "Time": "2025-06-15T11:00:00",
     "Geolocation": {
-      "Latitude": 51.050409,
-      "Longitude": 13.737262
+      "Latitude": 51.1528,
+      "Longitude": 14.9686
     },
     "Organizer": {
       "Name": "Sophie Schmitt",
@@ -84,8 +84,8 @@
     "Location": "Riesa",
     "Time": "2025-06-18T18:00:00",
     "Geolocation": {
-      "Latitude": 50.827845,
-      "Longitude": 12.92137
+      "Latitude": 51.3072,
+      "Longitude": 13.2917
     },
     "Organizer": {
       "Name": "Lars Becker",
@@ -111,8 +111,8 @@
     "Location": "Wittenberge",
     "Time": "2025-06-20T14:00:00",
     "Geolocation": {
-      "Latitude": 52.120533,
-      "Longitude": 11.627623
+      "Latitude": 53.0056,
+      "Longitude": 11.7506
     },
     "Organizer": {
       "Name": "Julia König",
@@ -138,8 +138,8 @@
     "Location": "Zeitz",
     "Time": "2025-06-22T10:00:00",
     "Geolocation": {
-      "Latitude": 52.390569,
-      "Longitude": 13.064473
+      "Latitude": 51.0492,
+      "Longitude": 12.1361
     },
     "Organizer": {
       "Name": "Tom Fischer",
@@ -165,8 +165,8 @@
     "Location": "Bautzen",
     "Time": "2025-06-25T15:00:00",
     "Geolocation": {
-      "Latitude": 51.75631,
-      "Longitude": 14.33287
+      "Latitude": 51.1803,
+      "Longitude": 14.4342
     },
     "Organizer": {
       "Name": "Mona Berger",
@@ -192,8 +192,8 @@
     "Location": "Eisenhüttenstadt",
     "Time": "2025-06-27T17:00:00",
     "Geolocation": {
-      "Latitude": 51.482504,
-      "Longitude": 11.970545
+      "Latitude": 52.1500,
+      "Longitude": 14.6333
     },
     "Organizer": {
       "Name": "Erik Schulz",
@@ -219,8 +219,8 @@
     "Location": "Rathenow",
     "Time": "2025-06-29T13:00:00",
     "Geolocation": {
-      "Latitude": 50.927054,
-      "Longitude": 11.589237
+      "Latitude": 52.6061,
+      "Longitude": 12.3361
     },
     "Organizer": {
       "Name": "Nina Hoffmann",
@@ -246,8 +246,8 @@
     "Location": "Falkensee",
     "Time": "2025-07-01T16:00:00",
     "Geolocation": {
-      "Latitude": 52.984768,
-      "Longitude": 12.62988
+      "Latitude": 52.5647,
+      "Longitude": 13.0881
     },
     "Organizer": {
       "Name": "Paul Weber",
@@ -273,8 +273,8 @@
     "Location": "Torgelow",
     "Time": "2025-07-03T15:00:00",
     "Geolocation": {
-      "Latitude": 54.092441,
-      "Longitude": 12.099147
+      "Latitude": 53.6317,
+      "Longitude": 14.0181
     },
     "Organizer": {
       "Name": "Klara Busch",
