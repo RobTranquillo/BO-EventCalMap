@@ -31,6 +31,7 @@ fetch('events.json')
             <b>Status:</b> ${ev.EventStatus.EventConfirmed ? 'Bestätigt' : (ev.EventStatus.ConfirmedHelpers >= ev.EventStatus.HelpersNeededMinimum ? 'Helfer:innen ok, Material fehlt' : 'Weitere Helfer:innen benötigt')}<br>
             <b>Links:</b> <a href='${ev.Wolke}' target='_blank'>Wolke</a> | <a href='${ev.Chatbegruenung}' target='_blank'>Chat</a>
           </div>
+          <button class="help-btn" onclick="window.open('${ev.Wolke}', '_blank')">Jetzt helfen</button>
         </div>
       `).join('<hr style="margin:8px 0;">');
     }
