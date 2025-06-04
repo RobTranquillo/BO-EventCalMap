@@ -116,13 +116,13 @@ function generateCalendar(events, month, year, container) {
         tooltip.style.left = (e.clientX + 16) + 'px';
         tooltip.style.top = (e.clientY + 8) + 'px';
 
-        // Marker hervorheben
+        // Marker hervorheben (Farbe ändern)
         weekEvents.forEach(ev => {
           const marker = markerMap.get(ev);
           if (marker) {
             marker.setZIndexOffset(1000);
             marker.setIcon(L.icon({
-              iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+              iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
               iconSize: [30, 48],
               iconAnchor: [15, 48],
               popupAnchor: [0, -40],
@@ -135,7 +135,7 @@ function generateCalendar(events, month, year, container) {
       });
       dayDiv.addEventListener('mouseleave', () => {
         tooltip.style.display = 'none';
-        // Marker zurücksetzen
+        // Marker zurücksetzen (Standardfarbe)
         weekEvents.forEach(ev => {
           const marker = markerMap.get(ev);
           if (marker) {
