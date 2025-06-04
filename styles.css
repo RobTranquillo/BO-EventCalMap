@@ -1,0 +1,37 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  height: 50vh;
+  width: 100%;
+}
+
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px;
+}
+
+.day {
+  width: 14%;
+  padding: 10px;
+  margin: 2px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.day.event {
+  background-color: #4caf50;
+  color: white;
+}
+
+.day:hover {
+  cursor: pointer;
+  background-color: #ddd;
+}

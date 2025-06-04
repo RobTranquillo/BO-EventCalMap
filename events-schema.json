@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "Location": {
+        "type": "string",
+        "description": "The address location of the event."
+      },
+      "Time": {
+        "type": "string",
+        "format": "date-time",
+        "description": "The time of the event in ISO 8601 format."
+      },
+      "Geolocation": {
+        "type": "object",
+        "properties": {
+          "Latitude": {
+            "type": "number",
+            "description": "The latitude of the event location."
+          },
+          "Longitude": {
+            "type": "number",
+            "description": "The longitude of the event location."
+          }
+        },
+        "required": ["Latitude", "Longitude"]
+      },
+      "Organizer": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "The name of the organizer."
+          },
+          "Contact": {
+            "type": "object",
+            "properties": {
+              "Email": {
+                "type": "string",
+                "format": "email",
+                "description": "The email address of the organizer."
+              },
+              "Phone": {
+                "type": "string",
+                "description": "The phone number of the organizer."
+              }
+            },
+            "required": ["Email"]
+          },
+          "SocialMedia": {
+            "type": "object",
+            "properties": {
+              "Mastodon": {
+                "type": "string",
+                "format": "uri",
+                "description": "The Mastodon profile link of the organizer."
+              },
+              "Peertube": {
+                "type": "string",
+                "format": "uri",
+                "description": "The Peertube profile link of the organizer."
+              },
+              "Facebook": {
+                "type": "string",
+                "format": "uri",
+                "description": "The Facebook profile link of the organizer."
+              },
+              "Twitter": {
+                "type": "string",
+                "format": "uri",
+                "description": "The Twitter profile link of the organizer."
+              },
+              "Instagram": {
+                "type": "string",
+                "format": "uri",
+                "description": "The Instagram profile link of the organizer."
+              },
+              "Tiktok": {
+                "type": "string",
+                "format": "uri",
+                "description": "The TikTok profile link of the organizer."
+              }
+            }
+          }
+        },
+        "required": ["Name", "Contact"]
+      },
+      "Description": {
+        "type": "string",
+        "description": "A brief description of the event."
+      },
+      "Wolke": {
+        "type": "string",
+        "format": "uri",
+        "description": "A link to additional event details."
+      },
+      "SocialMediaLinks": {
+        "type": "object",
+        "properties": {
+          "Mastodon": {
+            "type": "string",
+            "format": "uri",
+            "description": "A link to a specific Mastodon post about the event."
+          },
+          "Peertube": {
+            "type": "string",
+            "format": "uri",
+            "description": "A link to a specific Peertube video about the event."
+          },
+          "Facebook": {
+            "type": "string",
+            "format": "uri",
+            "description": "A link to a specific Facebook post about the event."
+          },
+          "Twitter": {
+            "type": "string",
+            "format": "uri",
+            "description": "A link to a specific Twitter post about the event."
+          },
+          "Instagram": {
+            "type": "string",
+            "format": "uri",
+            "description": "A link to a specific Instagram post about the event."
+          },
+          "Tiktok": {
+            "type": "string",
+            "format": "uri",
+            "description": "A link to a specific TikTok video about the event."
+          }
+        }
+      }
+    },
+    "required": ["Location", "Time", "Geolocation", "Organizer", "Description", "SocialMediaLinks"]
+  }
+}
