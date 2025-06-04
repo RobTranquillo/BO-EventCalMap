@@ -109,7 +109,7 @@ function generateCalendar(events, month, year, container) {
     if (weekEvents.length > 0) {
       dayDiv.addEventListener('mousemove', (e) => {
         const infos = weekEvents.map(ev =>
-          `<b>${ev.Organizer.Name}</b><br><i>${ev.EventType}</i><br>${ev.Description}`
+          `${ev.Location}: <b>${ev.Organizer.Name}</b><br>Noch Hilfe benötigt: ${ev.EventStatus.HelpersNeededMinimum - ev.EventStatus.ConfirmedHelpers}<br><i>${ev.EventType}</i><br>${ev.Description}`
         ).join('<hr style="margin:4px 0;">');
         tooltip.innerHTML = infos;
         tooltip.style.display = 'block';
