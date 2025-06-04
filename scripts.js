@@ -2,14 +2,38 @@
 fetch('events.json')
   .then(response => response.json())
   .then(events => {
-    console.log('Geladene Events:', events);
-    // Hier können Sie die Events weiterverarbeiten, z.B. für Map oder Kalender
-
+    if (events.length === 0)
+      throw new Error('Keine Events gefunden');
     // Initialize map
     const map = L.map('map').setView([52.520008, 13.404954], 7);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
     }).addTo(map);
+
+    // Infobox-Logik
+    const eventInfoBox = document.getElementById('event-info');
+    function showEventInfo(eventsToShow) {
+      if (!eventsToShow || eventsToShow.length === 0) {
+        eventInfoBox.style.display = 'none';
+        eventInfoBox.innerHTML = '';
+        return;
+      }
+      eventInfoBox.style.display = 'block';
+      eventInfoBox.innerHTML = eventsToShow.map(ev => `
+        <div style="margin-bottom:18px;">
+          <h3 style='margin:0 0 6px 0; color:#256029;'>${ev.EventType} in ${ev.Location}</h3>
+          <div style='font-size:0.98em; color:#444;'>
+            <b>Zeit:</b> ${new Date(ev.Time).toLocaleString('de-DE', {dateStyle:'full', timeStyle:'short'})}<br>
+            <b>Veranstalter:</b> ${ev.Organizer.Name}<br>
+            <b>Beschreibung:</b> ${ev.Description}<br>
+            <b>Helfer:innen:</b> ${ev.EventStatus.ConfirmedHelpers} / ${ev.EventStatus.HelpersNeededMinimum}<br>
+            <b>Material:</b> ${ev.EventStatus.SpecialRequirements}<br>
+            <b>Status:</b> ${ev.EventStatus.EventConfirmed ? 'Bestätigt' : (ev.EventStatus.ConfirmedHelpers >= ev.EventStatus.HelpersNeededMinimum ? 'Helfer:innen ok, Material fehlt' : 'Weitere Helfer:innen benötigt')}<br>
+            <b>Links:</b> <a href='${ev.Wolke}' target='_blank'>Wolke</a> | <a href='${ev.Chatbegruenung}' target='_blank'>Chat</a>
+          </div>
+        </div>
+      `).join('<hr style="margin:8px 0;">');
+    }
 
     // Marker-Referenzen für Kalender-Highlighting bereitstellen
     window._calendarMarkers = [];
@@ -19,6 +43,10 @@ fetch('events.json')
         .addTo(map)
         .bindPopup(`<b>${event.Location}</b><br>${event.Description}`);
       window._calendarMarkers.push({ event, marker });
+      // Marker-Klick öffnet Infobox für dieses Event
+      marker.on('click', () => {
+        showEventInfo([event]);
+      });
     });
 
     // Kalender-Logik ausgelagert nach calendar.js
@@ -28,6 +56,6 @@ fetch('events.json')
     const startYear = today.getFullYear();
 
     // Kalender für zwei Monate generieren
-    window.generateCalendar(events, startMonth, startYear, calendar);
-    window.generateCalendar(events, startMonth + 1, startYear, calendar);
+    window.generateCalendar(events, startMonth, startYear, calendar, showEventInfo);
+    window.generateCalendar(events, startMonth + 1, startYear, calendar, showEventInfo);
   });

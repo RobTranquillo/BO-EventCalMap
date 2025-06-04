@@ -16,7 +16,7 @@ function getISOWeek(date) {
   return 1 + Math.round(((tempDate.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
 }
 
-function generateCalendar(events, month, year, container) {
+function generateCalendar(events, month, year, container, showEventInfo) {
   // Ersten Tag des Monats finden
   const firstDay = new Date(year, month, 1);
   // Letzten Tag des Monats finden
@@ -151,6 +151,11 @@ function generateCalendar(events, month, year, container) {
             }));
           }
         });
+      });
+      dayDiv.addEventListener('click', () => {
+        if (typeof showEventInfo === 'function') {
+          showEventInfo(weekEvents);
+        }
       });
     }
     container.appendChild(dayDiv);
