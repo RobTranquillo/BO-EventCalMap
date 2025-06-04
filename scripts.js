@@ -6,7 +6,7 @@ fetch('events.json')
     // Hier können Sie die Events weiterverarbeiten, z.B. für Map oder Kalender
 
     // Initialize map
-    const map = L.map('map').setView([52.520008, 13.404954], 10);
+    const map = L.map('map').setView([52.520008, 13.404954], 7);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
     }).addTo(map);
