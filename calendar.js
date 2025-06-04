@@ -108,46 +108,53 @@ function generateCalendar(events, month, year, container, showEventInfo) {
     // Tooltip-Logik für Wochenfeld
     if (weekEvents.length > 0) {
       dayDiv.addEventListener('mousemove', (e) => {
-        const infos = weekEvents.map(ev =>
-          `${ev.Location}: <b>${ev.Organizer.Name}</b><br>Noch Hilfe benötigt: ${ev.EventStatus.HelpersNeededMinimum - ev.EventStatus.ConfirmedHelpers}<br><i>${ev.EventType}</i><br>${ev.Description}`
-        ).join('<hr style="margin:4px 0;">');
-        tooltip.innerHTML = infos;
-        tooltip.style.display = 'block';
-        tooltip.style.left = (e.clientX + 16) + 'px';
-        tooltip.style.top = (e.clientY + 8) + 'px';
-
-        // Marker hervorheben (Farbe ändern)
+        // Tooltip nur anzeigen, wenn event-info nicht sichtbar ist
+        const eventInfoBox = document.getElementById('event-info');
+        if (eventInfoBox && eventInfoBox.style.display !== 'block') {
+          const infos = weekEvents.map(ev =>
+            `${ev.Location}: <b>${ev.Organizer.Name}</b><br>Noch Hilfe benötigt: ${ev.EventStatus.HelpersNeededMinimum - ev.EventStatus.ConfirmedHelpers}<br><i>${ev.EventType}</i><br>${ev.Description}`
+          ).join('<hr style="margin:4px 0;">');
+          tooltip.innerHTML = infos;
+          tooltip.style.display = 'block';
+          tooltip.style.left = (e.clientX + 16) + 'px';
+          tooltip.style.top = (e.clientY + 8) + 'px';
+        } else {
+          tooltip.style.display = 'none';
+        }
+        // Marker hervorheben
         weekEvents.forEach(ev => {
           const marker = markerMap.get(ev);
           if (marker) {
             marker.setZIndexOffset(1000);
+            const origIcon = marker.options.icon;
             marker.setIcon(L.icon({
-              iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+              iconUrl: origIcon.options.iconUrl,
               iconSize: [30, 48],
               iconAnchor: [15, 48],
               popupAnchor: [0, -40],
-              shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-              shadowSize: [41, 41],
-              shadowAnchor: [13, 41]
+              shadowUrl: origIcon.options.shadowUrl,
+              shadowSize: origIcon.options.shadowSize,
+              shadowAnchor: origIcon.options.shadowAnchor
             }));
           }
         });
       });
       dayDiv.addEventListener('mouseleave', () => {
         tooltip.style.display = 'none';
-        // Marker zurücksetzen (Standardfarbe)
+        // Marker zurücksetzen
         weekEvents.forEach(ev => {
           const marker = markerMap.get(ev);
           if (marker) {
             marker.setZIndexOffset(0);
+            const origIcon = marker.options.icon;
             marker.setIcon(L.icon({
-              iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+              iconUrl: origIcon.options.iconUrl,
               iconSize: [25, 41],
               iconAnchor: [12, 41],
               popupAnchor: [1, -34],
-              shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-              shadowSize: [41, 41],
-              shadowAnchor: [13, 41]
+              shadowUrl: origIcon.options.shadowUrl,
+              shadowSize: origIcon.options.shadowSize,
+              shadowAnchor: origIcon.options.shadowAnchor
             }));
           }
         });

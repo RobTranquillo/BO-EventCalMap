@@ -40,7 +40,26 @@ fetch('events.json')
     window._calendarMarkers = [];
     events.forEach(event => {
       const { Latitude, Longitude } = event.Geolocation;
-      const marker = L.marker([Latitude, Longitude])
+      // Markerfarbe je nach Status bestimmen
+      let iconUrl = 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png';
+      if (event.EventStatus.EventConfirmed) {
+        iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png';
+      } else if (event.EventStatus.ConfirmedHelpers >= event.EventStatus.HelpersNeededMinimum) {
+        iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png';
+      } else {
+        iconUrl = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png';
+      }
+      const marker = L.marker([Latitude, Longitude], {
+        icon: L.icon({
+          iconUrl,
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+          shadowSize: [41, 41],
+          shadowAnchor: [13, 41]
+        })
+      })
         .addTo(map)
         .bindPopup(`<b>${event.Location}</b><br>${event.Description}`);
       window._calendarMarkers.push({ event, marker });
