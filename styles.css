@@ -35,3 +35,37 @@ body {
   cursor: pointer;
   background-color: #ddd;
 }
+
+.legend-box {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  border-radius: 3px;
+  vertical-align: middle;
+  border: 1px solid #bbb;
+}
+
+.legend-red {
+  background: #e53935;
+}
+
+.legend-yellow {
+  background: #ffd600;
+}
+
+.legend-green {
+  background: #4caf50;
+}
+
+.calendar-legend {
+  margin: 10px auto 20px auto;
+  max-width: 600px;
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}

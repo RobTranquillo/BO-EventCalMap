@@ -6,15 +6,20 @@
   <title>Event Übersicht</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="events.json"></script>
 </head>
 <body>
   <h1>Event Übersicht</h1>
   <div id="map"></div>
   <h2>Kalender</h2>
   <div class="calendar" id="calendar"></div>
+  <div class="calendar-legend">
+    <span><span class="legend-box legend-red"></span> Weitere Menschen zur Mithilfe benötigt</span>
+    <span><span class="legend-box legend-yellow"></span> Mindestpersonen erreicht, aber noch Material benötigt</span>
+    <span><span class="legend-box legend-green"></span> Veranstaltung findet statt</span>
+  </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="calendar.js"></script>
   <script src="scripts.js"></script>
 </body>
 </html>
