@@ -30,6 +30,36 @@ function generateCalendar(events, month, year, container) {
   end.setDate(lastDay.getDate() + (7 - end.getDay() === 7 ? 0 : 7 - end.getDay()));
 
   let current = new Date(start);
+  // Tooltip-Element erstellen (einmalig)
+  let tooltip = document.getElementById('calendar-tooltip');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.id = 'calendar-tooltip';
+    tooltip.style.position = 'fixed';
+    tooltip.style.pointerEvents = 'none';
+    tooltip.style.zIndex = '1000';
+    tooltip.style.display = 'none';
+    tooltip.style.background = '#fff';
+    tooltip.style.border = '1px solid #bbb';
+    tooltip.style.borderRadius = '6px';
+    tooltip.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+    tooltip.style.padding = '8px 12px';
+    tooltip.style.fontSize = '0.95em';
+    tooltip.style.maxWidth = '260px';
+    document.body.appendChild(tooltip);
+  }
+
+  // Marker-Referenzen für Zuordnung Woche <-> Marker
+  const markerMap = new Map();
+  // Marker-Referenzen sammeln (in scripts.js müssen Marker mit eindeutiger ID erzeugt werden)
+  // Diese Funktion erwartet, dass window._calendarMarkers existiert und ein Array von {event, marker} ist
+  // (siehe Anpassung in scripts.js)
+  if (window._calendarMarkers) {
+    window._calendarMarkers.forEach(({event, marker}) => {
+      markerMap.set(event, marker);
+    });
+  }
+
   while (current <= end) {
     // Für jede Woche ein Feld
     const weekStart = new Date(current);
@@ -67,6 +97,61 @@ function generateCalendar(events, month, year, container) {
       dayDiv.classList.add('legend-yellow');
     } else if (weekStatus === 'red') {
       dayDiv.classList.add('legend-red');
+    }
+
+    // Events dieser Woche sammeln
+    const weekEvents = events.filter(event => {
+      const eventDate = new Date(event.Time);
+      return eventDate >= weekStart && eventDate <= weekEnd;
+    });
+
+    // Tooltip-Logik für Wochenfeld
+    if (weekEvents.length > 0) {
+      dayDiv.addEventListener('mousemove', (e) => {
+        const infos = weekEvents.map(ev =>
+          `<b>${ev.Organizer.Name}</b><br><i>${ev.EventType}</i><br>${ev.Description}`
+        ).join('<hr style="margin:4px 0;">');
+        tooltip.innerHTML = infos;
+        tooltip.style.display = 'block';
+        tooltip.style.left = (e.clientX + 16) + 'px';
+        tooltip.style.top = (e.clientY + 8) + 'px';
+
+        // Marker hervorheben
+        weekEvents.forEach(ev => {
+          const marker = markerMap.get(ev);
+          if (marker) {
+            marker.setZIndexOffset(1000);
+            marker.setIcon(L.icon({
+              iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+              iconSize: [30, 48],
+              iconAnchor: [15, 48],
+              popupAnchor: [0, -40],
+              shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+              shadowSize: [41, 41],
+              shadowAnchor: [13, 41]
+            }));
+          }
+        });
+      });
+      dayDiv.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+        // Marker zurücksetzen
+        weekEvents.forEach(ev => {
+          const marker = markerMap.get(ev);
+          if (marker) {
+            marker.setZIndexOffset(0);
+            marker.setIcon(L.icon({
+              iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+              iconSize: [25, 41],
+              iconAnchor: [12, 41],
+              popupAnchor: [1, -34],
+              shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+              shadowSize: [41, 41],
+              shadowAnchor: [13, 41]
+            }));
+          }
+        });
+      });
     }
     container.appendChild(dayDiv);
     // Zur nächsten Woche springen

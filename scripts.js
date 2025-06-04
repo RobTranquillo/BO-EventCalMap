@@ -11,12 +11,14 @@ fetch('events.json')
       maxZoom: 19,
     }).addTo(map);
 
-    // Add markers from events
+    // Marker-Referenzen für Kalender-Highlighting bereitstellen
+    window._calendarMarkers = [];
     events.forEach(event => {
       const { Latitude, Longitude } = event.Geolocation;
-      L.marker([Latitude, Longitude])
+      const marker = L.marker([Latitude, Longitude])
         .addTo(map)
         .bindPopup(`<b>${event.Location}</b><br>${event.Description}`);
+      window._calendarMarkers.push({ event, marker });
     });
 
     // Kalender-Logik ausgelagert nach calendar.js

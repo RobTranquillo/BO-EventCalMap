@@ -1,6 +1,6 @@
 [
   {
-    "Location": "Berlin",
+    "Location": "Eberswalde",
     "Time": "2025-06-10T14:00:00",
     "Geolocation": {
       "Latitude": 52.520008,
@@ -23,6 +23,276 @@
       "HelpersNeededMinimum": 5,
       "ConfirmedHelpers": 3,
       "SpecialRequirements": "Es werden Flyer und ein Pavillon benötigt.",
+      "EventConfirmed": false
+    }
+  },
+  {
+    "Location": "Senftenberg",
+    "Time": "2025-06-12T16:00:00",
+    "Geolocation": {
+      "Latitude": 51.339695,
+      "Longitude": 12.373075
+    },
+    "Organizer": {
+      "Name": "Max Mustermann",
+      "Contact": {
+        "Email": "max.mustermann@example.com",
+        "Phone": "+49 341 9876543",
+        "SocialMediaLinks": "https://twitter.com/max_muster https://facebook.com/max.mustermann"
+      }
+    },
+    "EventType": "Straßenwahlkampf",
+    "Description": "Infostand in der Innenstadt mit Verteilaktion von Wahlprogrammen.",
+    "Wolke": "https://wolke.netzbegruenung.de/Leipzig/veranstaltung-2025-06-12",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Leipzig-Wahlkampf?msg=abc123",
+    "SocialMediaLinks": "https://twitter.com/max_muster/status/654321 https://facebook.com/max.mustermann/posts/654321",
+    "EventStatus": {
+      "HelpersNeededMinimum": 4,
+      "ConfirmedHelpers": 2,
+      "SpecialRequirements": "Tisch und Lautsprecheranlage.",
+      "EventConfirmed": false
+    }
+  },
+  {
+    "Location": "Görlitz",
+    "Time": "2025-06-15T11:00:00",
+    "Geolocation": {
+      "Latitude": 51.050409,
+      "Longitude": 13.737262
+    },
+    "Organizer": {
+      "Name": "Sophie Schmitt",
+      "Contact": {
+        "Email": "sophie.schmitt@example.com",
+        "Phone": "+49 351 1234567",
+        "SocialMediaLinks": "https://instagram.com/sophie_schmitt"
+      }
+    },
+    "EventType": "Podiumsdiskussion",
+    "Description": "Diskussion mit anderen Parteien zum Thema Klimaschutz.",
+    "Wolke": "https://wolke.netzbegruenung.de/Dresden/veranstaltung-2025-06-15",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Dresden-Podium?msg=def456",
+    "SocialMediaLinks": "https://instagram.com/p/abcdef",
+    "EventStatus": {
+      "HelpersNeededMinimum": 2,
+      "ConfirmedHelpers": 2,
+      "SpecialRequirements": "Flyer und Roll-Up.",
+      "EventConfirmed": false
+    }
+  },
+  {
+    "Location": "Riesa",
+    "Time": "2025-06-18T18:00:00",
+    "Geolocation": {
+      "Latitude": 50.827845,
+      "Longitude": 12.92137
+    },
+    "Organizer": {
+      "Name": "Lars Becker",
+      "Contact": {
+        "Email": "lars.becker@example.com",
+        "Phone": "+49 371 7654321",
+        "SocialMediaLinks": "https://facebook.com/lars.becker"
+      }
+    },
+    "EventType": "Kundgebung",
+    "Description": "Kundgebung auf dem Marktplatz mit Redebeiträgen zur Sozialpolitik.",
+    "Wolke": "https://wolke.netzbegruenung.de/Chemnitz/veranstaltung-2025-06-18",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Chemnitz-Kundgebung?msg=ghi789",
+    "SocialMediaLinks": "https://facebook.com/lars.becker/posts/789012",
+    "EventStatus": {
+      "HelpersNeededMinimum": 6,
+      "ConfirmedHelpers": 6,
+      "SpecialRequirements": "Bühne und Mikrofon.",
+      "EventConfirmed": true
+    }
+  },
+  {
+    "Location": "Wittenberge",
+    "Time": "2025-06-20T14:00:00",
+    "Geolocation": {
+      "Latitude": 52.120533,
+      "Longitude": 11.627623
+    },
+    "Organizer": {
+      "Name": "Julia König",
+      "Contact": {
+        "Email": "julia.koenig@example.com",
+        "Phone": "+49 391 1239876",
+        "SocialMediaLinks": "https://twitter.com/julia_koenig"
+      }
+    },
+    "EventType": "Infostand",
+    "Description": "Infostand am Hauptbahnhof mit Giveaways.",
+    "Wolke": "https://wolke.netzbegruenung.de/Magdeburg/veranstaltung-2025-06-20",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Magdeburg-Infostand?msg=jkl012",
+    "SocialMediaLinks": "https://twitter.com/julia_koenig/status/123987",
+    "EventStatus": {
+      "HelpersNeededMinimum": 3,
+      "ConfirmedHelpers": 1,
+      "SpecialRequirements": "Pavillon und Banner.",
+      "EventConfirmed": false
+    }
+  },
+  {
+    "Location": "Zeitz",
+    "Time": "2025-06-22T10:00:00",
+    "Geolocation": {
+      "Latitude": 52.390569,
+      "Longitude": 13.064473
+    },
+    "Organizer": {
+      "Name": "Tom Fischer",
+      "Contact": {
+        "Email": "tom.fischer@example.com",
+        "Phone": "+49 331 4567890",
+        "SocialMediaLinks": "https://facebook.com/tom.fischer"
+      }
+    },
+    "EventType": "Bürgerdialog",
+    "Description": "Bürgerdialog im Stadtpark mit Kaffee und Kuchen.",
+    "Wolke": "https://wolke.netzbegruenung.de/Potsdam/veranstaltung-2025-06-22",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Potsdam-Dialog?msg=mno345",
+    "SocialMediaLinks": "https://facebook.com/tom.fischer/posts/456789",
+    "EventStatus": {
+      "HelpersNeededMinimum": 2,
+      "ConfirmedHelpers": 2,
+      "SpecialRequirements": "Kaffeemaschine.",
+      "EventConfirmed": true
+    }
+  },
+  {
+    "Location": "Bautzen",
+    "Time": "2025-06-25T15:00:00",
+    "Geolocation": {
+      "Latitude": 51.75631,
+      "Longitude": 14.33287
+    },
+    "Organizer": {
+      "Name": "Mona Berger",
+      "Contact": {
+        "Email": "mona.berger@example.com",
+        "Phone": "+49 355 1234567",
+        "SocialMediaLinks": "https://instagram.com/mona.berger"
+      }
+    },
+    "EventType": "Straßenwahlkampf",
+    "Description": "Straßenwahlkampf in der Fußgängerzone mit Musik.",
+    "Wolke": "https://wolke.netzbegruenung.de/Cottbus/veranstaltung-2025-06-25",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Cottbus-Wahlkampf?msg=pqr678",
+    "SocialMediaLinks": "https://instagram.com/p/ghijkl",
+    "EventStatus": {
+      "HelpersNeededMinimum": 5,
+      "ConfirmedHelpers": 3,
+      "SpecialRequirements": "Musikanlage.",
+      "EventConfirmed": false
+    }
+  },
+  {
+    "Location": "Eisenhüttenstadt",
+    "Time": "2025-06-27T17:00:00",
+    "Geolocation": {
+      "Latitude": 51.482504,
+      "Longitude": 11.970545
+    },
+    "Organizer": {
+      "Name": "Erik Schulz",
+      "Contact": {
+        "Email": "erik.schulz@example.com",
+        "Phone": "+49 345 9876543",
+        "SocialMediaLinks": "https://twitter.com/erik_schulz"
+      }
+    },
+    "EventType": "Kundgebung",
+    "Description": "Kundgebung zum Thema Bildungspolitik mit Gastrednern.",
+    "Wolke": "https://wolke.netzbegruenung.de/Halle/veranstaltung-2025-06-27",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Halle-Kundgebung?msg=stu901",
+    "SocialMediaLinks": "https://twitter.com/erik_schulz/status/987654",
+    "EventStatus": {
+      "HelpersNeededMinimum": 7,
+      "ConfirmedHelpers": 5,
+      "SpecialRequirements": "Rednerpult und Technik.",
+      "EventConfirmed": false
+    }
+  },
+  {
+    "Location": "Rathenow",
+    "Time": "2025-06-29T13:00:00",
+    "Geolocation": {
+      "Latitude": 50.927054,
+      "Longitude": 11.589237
+    },
+    "Organizer": {
+      "Name": "Nina Hoffmann",
+      "Contact": {
+        "Email": "nina.hoffmann@example.com",
+        "Phone": "+49 3641 123456",
+        "SocialMediaLinks": "https://facebook.com/nina.hoffmann"
+      }
+    },
+    "EventType": "Infostand",
+    "Description": "Infostand am Marktplatz mit Kinderprogramm.",
+    "Wolke": "https://wolke.netzbegruenung.de/Jena/veranstaltung-2025-06-29",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Jena-Infostand?msg=vwx234",
+    "SocialMediaLinks": "https://facebook.com/nina.hoffmann/posts/123456",
+    "EventStatus": {
+      "HelpersNeededMinimum": 3,
+      "ConfirmedHelpers": 3,
+      "SpecialRequirements": "Kinderschminken.",
+      "EventConfirmed": true
+    }
+  },
+  {
+    "Location": "Falkensee",
+    "Time": "2025-07-01T16:00:00",
+    "Geolocation": {
+      "Latitude": 52.984768,
+      "Longitude": 12.62988
+    },
+    "Organizer": {
+      "Name": "Paul Weber",
+      "Contact": {
+        "Email": "paul.weber@example.com",
+        "Phone": "+49 361 6543210",
+        "SocialMediaLinks": "https://instagram.com/paul.weber"
+      }
+    },
+    "EventType": "Straßenwahlkampf",
+    "Description": "Straßenwahlkampf mit Haustürbesuchen.",
+    "Wolke": "https://wolke.netzbegruenung.de/Erfurt/veranstaltung-2025-07-01",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Erfurt-Wahlkampf?msg=yz1234",
+    "SocialMediaLinks": "https://instagram.com/p/mnopqr",
+    "EventStatus": {
+      "HelpersNeededMinimum": 4,
+      "ConfirmedHelpers": 4,
+      "SpecialRequirements": "Flyer und Listen.",
+      "EventConfirmed": true
+    }
+  },
+  {
+    "Location": "Torgelow",
+    "Time": "2025-07-03T15:00:00",
+    "Geolocation": {
+      "Latitude": 54.092441,
+      "Longitude": 12.099147
+    },
+    "Organizer": {
+      "Name": "Klara Busch",
+      "Contact": {
+        "Email": "klara.busch@example.com",
+        "Phone": "+49 381 1234567",
+        "SocialMediaLinks": "https://twitter.com/klara_busch"
+      }
+    },
+    "EventType": "Podiumsdiskussion",
+    "Description": "Podiumsdiskussion zur Verkehrswende.",
+    "Wolke": "https://wolke.netzbegruenung.de/Rostock/veranstaltung-2025-07-03",
+    "Chatbegruenung": "https://chatbegruenung.de/channel/Rostock-Podium?msg=abc567",
+    "SocialMediaLinks": "https://twitter.com/klara_busch/status/765432",
+    "EventStatus": {
+      "HelpersNeededMinimum": 2,
+      "ConfirmedHelpers": 1,
+      "SpecialRequirements": "Moderation.",
       "EventConfirmed": false
     }
   }
