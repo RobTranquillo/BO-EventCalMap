@@ -30,24 +30,6 @@ function generateCalendar(events, month, year, container, showEventInfo) {
   end.setDate(lastDay.getDate() + (7 - end.getDay() === 7 ? 0 : 7 - end.getDay()));
 
   let current = new Date(start);
-  // Tooltip-Element erstellen (einmalig)
-  let tooltip = document.getElementById('calendar-tooltip');
-  if (!tooltip) {
-    tooltip = document.createElement('div');
-    tooltip.id = 'calendar-tooltip';
-    tooltip.style.position = 'fixed';
-    tooltip.style.pointerEvents = 'none';
-    tooltip.style.zIndex = '1000';
-    tooltip.style.display = 'none';
-    tooltip.style.background = '#fff';
-    tooltip.style.border = '1px solid #bbb';
-    tooltip.style.borderRadius = '6px';
-    tooltip.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
-    tooltip.style.padding = '8px 12px';
-    tooltip.style.fontSize = '0.95em';
-    tooltip.style.maxWidth = '260px';
-    document.body.appendChild(tooltip);
-  }
 
   // Marker-Referenzen für Zuordnung Woche <-> Marker
   const markerMap = new Map();
@@ -105,59 +87,17 @@ function generateCalendar(events, month, year, container, showEventInfo) {
       return eventDate >= weekStart && eventDate <= weekEnd;
     });
 
-    // Tooltip-Logik für Wochenfeld
+    // Tooltip-Logik für Wochenfeld entfernt
     if (weekEvents.length > 0) {
       dayDiv.addEventListener('mousemove', (e) => {
-        // Tooltip nur anzeigen, wenn event-info nicht sichtbar ist
-        const eventInfoBox = document.getElementById('event-info');
-        if (eventInfoBox && eventInfoBox.style.display !== 'block') {
-          const infos = weekEvents.map(ev =>
-            `${ev.Location}: <b>${ev.Organizer.Name}</b><br>Noch Hilfe benötigt: ${ev.EventStatus.HelpersNeededMinimum - ev.EventStatus.ConfirmedHelpers}<br><i>${ev.EventType}</i><br>${ev.Description}`
-          ).join('<hr style="margin:4px 0;">');
-          tooltip.innerHTML = infos;
-          tooltip.style.display = 'block';
-          tooltip.style.left = (e.clientX + 16) + 'px';
-          tooltip.style.top = (e.clientY + 8) + 'px';
-        } else {
-          tooltip.style.display = 'none';
-        }
         // Marker hervorheben
-        weekEvents.forEach(ev => {
-          const marker = markerMap.get(ev);
-          if (marker) {
-            marker.setZIndexOffset(1000);
-            const origIcon = marker.options.icon;
-            marker.setIcon(L.icon({
-              iconUrl: origIcon.options.iconUrl,
-              iconSize: [30, 48],
-              iconAnchor: [15, 48],
-              popupAnchor: [0, -40],
-              shadowUrl: origIcon.options.shadowUrl,
-              shadowSize: origIcon.options.shadowSize,
-              shadowAnchor: origIcon.options.shadowAnchor
-            }));
-          }
-        });
+        const markers = weekEvents.map(ev => markerMap.get(ev)).filter(Boolean);
+        highlightMarkers(markers);
       });
       dayDiv.addEventListener('mouseleave', () => {
-        tooltip.style.display = 'none';
         // Marker zurücksetzen
-        weekEvents.forEach(ev => {
-          const marker = markerMap.get(ev);
-          if (marker) {
-            marker.setZIndexOffset(0);
-            const origIcon = marker.options.icon;
-            marker.setIcon(L.icon({
-              iconUrl: origIcon.options.iconUrl,
-              iconSize: [25, 41],
-              iconAnchor: [12, 41],
-              popupAnchor: [1, -34],
-              shadowUrl: origIcon.options.shadowUrl,
-              shadowSize: origIcon.options.shadowSize,
-              shadowAnchor: origIcon.options.shadowAnchor
-            }));
-          }
-        });
+        const markers = weekEvents.map(ev => markerMap.get(ev)).filter(Boolean);
+        resetMarkers(markers);
       });
       dayDiv.addEventListener('click', () => {
         if (typeof showEventInfo === 'function') {
@@ -168,6 +108,42 @@ function generateCalendar(events, month, year, container, showEventInfo) {
     container.appendChild(dayDiv);
     // Zur nächsten Woche springen
     current.setDate(current.getDate() + 7);
+  }
+
+  // --- Hilfsfunktionen für Marker-Hover ---
+  function highlightMarkers(markers) {
+    markers.forEach(marker => {
+      if (marker) {
+        marker.setZIndexOffset(1000);
+        const origIcon = marker.options.icon;
+        marker.setIcon(L.icon({
+          iconUrl: origIcon.options.iconUrl,
+          iconSize: [30, 48],
+          iconAnchor: [15, 48],
+          popupAnchor: [0, -40],
+          shadowUrl: origIcon.options.shadowUrl,
+          shadowSize: origIcon.options.shadowSize,
+          shadowAnchor: origIcon.options.shadowAnchor
+        }));
+      }
+    });
+  }
+  function resetMarkers(markers) {
+    markers.forEach(marker => {
+      if (marker) {
+        marker.setZIndexOffset(0);
+        const origIcon = marker.options.icon;
+        marker.setIcon(L.icon({
+          iconUrl: origIcon.options.iconUrl,
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowUrl: origIcon.options.shadowUrl,
+          shadowSize: origIcon.options.shadowSize,
+          shadowAnchor: origIcon.options.shadowAnchor
+        }));
+      }
+    });
   }
 }
 
