@@ -74,5 +74,25 @@ fetch('events.json')
     const today = new Date();
     const startDate = today;
     const endDate = new Date(2026, 8, 26); // 26. September 2026
-    window.generateCalendar(events, startDate, endDate, calendar, showEventInfo);
+
+    // Funktion zum Filtern der Events nach Kartenausschnitt
+    function getVisibleEvents() {
+      const bounds = map.getBounds();
+      return events.filter(ev => {
+        const { Latitude, Longitude } = ev.Geolocation;
+        return bounds.contains([Latitude, Longitude]);
+      });
+    }
+
+    // Funktion zum Aktualisieren des Kalenders
+    function updateCalendar() {
+      calendar.innerHTML = '';
+      const visibleEvents = getVisibleEvents();
+      window.generateCalendar(visibleEvents, startDate, endDate, calendar, showEventInfo);
+    }
+
+    // Initiales Rendering
+    updateCalendar();
+    // Kalender aktualisieren, wenn der Kartenausschnitt geändert wird
+    map.on('moveend', updateCalendar);
   });
