@@ -26,8 +26,7 @@ function generateCalendar(events, month, year, container, showEventInfo) {
   const start = new Date(firstDay);
   start.setDate(firstDay.getDate() - ((firstDay.getDay() + 6) % 7));
   // Letzten Sonntag nach oder am Monatsende finden
-  const end = new Date(lastDay);
-  end.setDate(lastDay.getDate() + (7 - end.getDay() === 7 ? 0 : 7 - end.getDay()));
+  const end = new Date(2026, 8, 26); // 26. September 2026 (Monat 8 = September)
 
   let current = new Date(start);
 
@@ -87,15 +86,12 @@ function generateCalendar(events, month, year, container, showEventInfo) {
       return eventDate >= weekStart && eventDate <= weekEnd;
     });
 
-    // Tooltip-Logik für Wochenfeld entfernt
     if (weekEvents.length > 0) {
       dayDiv.addEventListener('mousemove', (e) => {
-        // Marker hervorheben
         const markers = weekEvents.map(ev => markerMap.get(ev)).filter(Boolean);
         highlightMarkers(markers);
       });
       dayDiv.addEventListener('mouseleave', () => {
-        // Marker zurücksetzen
         const markers = weekEvents.map(ev => markerMap.get(ev)).filter(Boolean);
         resetMarkers(markers);
       });
@@ -109,6 +105,15 @@ function generateCalendar(events, month, year, container, showEventInfo) {
     // Zur nächsten Woche springen
     current.setDate(current.getDate() + 7);
   }
+
+  // Kachel für Wahltag am Ende einfügen
+  const wahltagDiv = document.createElement('div');
+  wahltagDiv.className = 'day';
+  wahltagDiv.style.background = '#256029';
+  wahltagDiv.style.color = '#fff';
+  wahltagDiv.style.fontWeight = 'bold';
+  wahltagDiv.textContent = 'Wahltag 26. September';
+  container.appendChild(wahltagDiv);
 
   // --- Hilfsfunktionen für Marker-Hover ---
   function highlightMarkers(markers) {
