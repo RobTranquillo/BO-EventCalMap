@@ -55,6 +55,26 @@ function generateCalendar(events, startDate, endDate, container, showEventInfo) 
     dayDiv.textContent = `KW ${weekNumber}\n${weekStartStr} - ${weekEndStr}`;
     dayDiv.style.whiteSpace = 'pre-line';
 
+    // Events dieser Woche sammeln
+    const weekEvents = events.filter(event => {
+      const eventDate = new Date(event.Time);
+      return eventDate >= weekStart && eventDate <= weekEnd;
+    });
+
+    // Blase für Event-Anzahl
+    if (weekEvents.length > 0) {
+      const badge = document.createElement('span');
+      badge.className = 'event-badge';
+      const badgeInner = document.createElement('span');
+      badgeInner.className = 'event-badge-inner';
+      const badgeCount = document.createElement('span');
+      badgeCount.className = 'event-badge-count';
+      badgeCount.textContent = weekEvents.length;
+      badgeInner.appendChild(badgeCount);
+      badge.appendChild(badgeInner);
+      dayDiv.appendChild(badge);
+    }
+
     // Prüfen, ob in dieser Woche ein Event ist und Status bestimmen
     let weekStatus = null;
     events.forEach(event => {
@@ -63,10 +83,8 @@ function generateCalendar(events, startDate, endDate, container, showEventInfo) 
         if (event.EventStatus.EventConfirmed) {
           weekStatus = 'green';
         } else if (event.EventStatus.ConfirmedHelpers >= event.EventStatus.HelpersNeededMinimum) {
-          // Mindestpersonen erreicht, aber Event nicht bestätigt => gelb
           weekStatus = weekStatus === 'green' ? 'green' : 'yellow';
         } else {
-          // Noch Helfer benötigt => rot
           weekStatus = weekStatus === 'green' || weekStatus === 'yellow' ? weekStatus : 'red';
         }
       }
@@ -78,12 +96,6 @@ function generateCalendar(events, startDate, endDate, container, showEventInfo) 
     } else if (weekStatus === 'red') {
       dayDiv.classList.add('legend-red');
     }
-
-    // Events dieser Woche sammeln
-    const weekEvents = events.filter(event => {
-      const eventDate = new Date(event.Time);
-      return eventDate >= weekStart && eventDate <= weekEnd;
-    });
 
     if (weekEvents.length > 0) {
       dayDiv.addEventListener('mousemove', (e) => {
