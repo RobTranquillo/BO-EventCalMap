@@ -1,8 +1,8 @@
 // calendar.js
 // Generiert einen Monatskalender im angegebenen Container
 // events: Array von Event-Objekten
-// month: 0-basierter Monat (0=Januar)
-// year: Jahr (z.B. 2025)
+// startDate: Startdatum im Format YYYY-MM-DD
+// endDate: Enddatum im Format YYYY-MM-DD
 // container: DOM-Element, in das die Tage eingefügt werden
 // Hilfsfunktion zur Berechnung der Kalenderwoche (ISO 8601)
 function getISOWeek(date) {
@@ -16,17 +16,16 @@ function getISOWeek(date) {
   return 1 + Math.round(((tempDate.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
 }
 
-function generateCalendar(events, month, year, container, showEventInfo) {
-  // Ersten Tag des Monats finden
-  const firstDay = new Date(year, month, 1);
-  // Letzten Tag des Monats finden
-  const lastDay = new Date(year, month + 1, 0);
-
-  // Ersten Montag vor oder am Monatsanfang finden
-  const start = new Date(firstDay);
-  start.setDate(firstDay.getDate() - ((firstDay.getDay() + 6) % 7));
-  // Letzten Sonntag nach oder am Monatsende finden
-  const end = new Date(2026, 8, 26); // 26. September 2026 (Monat 8 = September)
+function generateCalendar(events, startDate, endDate, container, showEventInfo) {
+  // Start- und Enddatum als Date-Objekte
+  const start = new Date(startDate);
+  start.setHours(0, 0, 0, 0);
+  // Ersten Montag vor oder am Startdatum finden
+  start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+  const end = new Date(endDate);
+  end.setHours(0, 0, 0, 0);
+  // Letzten Sonntag nach oder am Enddatum finden
+  end.setDate(end.getDate() + (7 - end.getDay() === 7 ? 0 : 7 - end.getDay()));
 
   let current = new Date(start);
 

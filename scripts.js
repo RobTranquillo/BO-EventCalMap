@@ -69,13 +69,10 @@ fetch('events.json')
       });
     });
 
-    // Kalender-Logik ausgelagert nach calendar.js
+    // Kalender für gewünschten Zeitraum generieren (z.B. ab heute bis Wahltag 2026)
     const calendar = document.getElementById('calendar');
     const today = new Date();
-    const startMonth = today.getMonth();
-    const startYear = today.getFullYear();
-
-    // Kalender für zwei Monate generieren
-    window.generateCalendar(events, startMonth, startYear, calendar, showEventInfo);
-    window.generateCalendar(events, startMonth + 1, startYear, calendar, showEventInfo);
+    const startDate = today;
+    const endDate = new Date(2026, 8, 26); // 26. September 2026
+    window.generateCalendar(events, startDate, endDate, calendar, showEventInfo);
   });
