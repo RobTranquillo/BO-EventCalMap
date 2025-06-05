@@ -144,14 +144,14 @@ h2 {
 }
 .calendar-legend {
   margin: 7px auto 14px auto;
-  max-width: 420px;
+  max-width: 80%;
   font-size: 0.98em;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: flex-start;
+  flex-direction: row;
+  gap: 8%;
+  align-items: center;
   flex-wrap: nowrap;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .help-btn {
