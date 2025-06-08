@@ -218,16 +218,48 @@ h2 {
   #map, #event-info {
     max-width: 100vw;
     min-width: 0;
+    width: 100vw;      /* <--- Diese Zeile hinzufügen */
     height: 36vh;
     min-height: 180px;
+    display: block;
   }
   .page-explanation {
     padding: 10px 4px 8px 8px;
     max-width: 98vw;
+    width: 98vw;
   }
   .day {
     width: 98vw;
     min-width: 0;
     font-size: 0.97em;
+  }
+  .calendar-legend {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    max-width: 98vw;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 600px) {
+  #map {
+    min-width: 0;
+    width: 100vw;      /* <--- Diese Zeile hinzufügen */
+    min-height: 220px;
+    height: 32vh;
+  }
+  #event-info {
+    min-height: 120px;
+    height: 28vh;
+    padding: 10px 6px 8px 8px;
+  }
+  .calendar {
+    gap: 2px;
+    padding: 2px;
+  }
+  .day {
+    padding: 4px 2px 4px 2px;
+    font-size: 0.95em;
   }
 }
