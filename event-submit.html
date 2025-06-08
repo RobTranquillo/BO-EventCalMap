@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neues Event einreichen</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <form class="event-form" id="eventForm">
+    <h2>Neues Event einreichen</h2>
+    <label>Ort <span style="color:#e53935">*</span> <input name="Location" required placeholder="z.B. Leipzig"></label>
+    <div class="form-row">
+      <div><label>Datum <span style="color:#e53935">*</span> <input type="date" name="Date" required value="2025-06-10"></label></div>
+      <div><label>Uhrzeit <input type="time" name="Time" placeholder="14:00"></label></div>
+    </div>
+    <div class="form-row">
+      <div><label>Breitengrad <input name="Latitude" type="number" step="any" placeholder="z.B. 51.3397"></label></div>
+      <div><label>Längengrad <input name="Longitude" type="number" step="any" placeholder="z.B. 12.3731"></label></div>
+    </div>
+    <label>Veranstalter-Name <span style="color:#e53935">*</span> <input name="OrganizerName" required placeholder="z.B. Max Mustermann"></label>
+    <label>Veranstalter-Email <span style="color:#e53935">*</span> <input name="OrganizerEmail" type="email" required placeholder="max@beispiel.de"></label>
+    <label>Veranstalter-Telefon <input name="OrganizerPhone" placeholder="z.B. 0123 456789"></label>
+    <label>Event-Typ <span style="color:#e53935">*</span> <input name="EventType" required placeholder="z.B. Infostand"></label>
+    <label>Beschreibung <span style="color:#e53935">*</span> <textarea name="Description" required placeholder="Kurze Beschreibung des Events"></textarea></label>
+    <label>Wolke-Link <input name="Wolke" type="url" placeholder="https://wolke.netzbegruenung.de/..." ></label>
+    <label>Chatbegruenung-Link <input name="Chatbegruenung" type="url" placeholder="https://chatbegruenung.de/..." ></label>
+    <label>Social Media Links <textarea name="SocialMediaLinks" placeholder="Ein Link pro Zeile"></textarea></label>
+    <label>Helfer:innen benötigt (Minimum) <input name="HelpersNeededMinimum" type="number" min="1" required placeholder="z.B. 3"></label>
+    <label>Material/Sonderbedarf <input name="SpecialRequirements" placeholder="z.B. Pavillon, Flyer"></label>
+    <button type="submit">Event als JSON an E-Mail-Client senden</button>
+    <div class="info">Mit <span style='color:#e53935'>*</span> markierte Felder sind Pflichtfelder.<br>Das Event wird nicht automatisch gespeichert, sondern als JSON an deinen E-Mail-Client übergeben. Bitte prüfe die Daten und sende die Mail an das Orga-Team.</div>
+  </form>
+  <script>
+    document.getElementById('eventForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const f = e.target;
+      const event = {
+        Location: f.Location.value,
+        Time: f.Date.value + (f.Time.value ? ('T' + f.Time.value) : ''),
+        Geolocation: {
+          Latitude: f.Latitude.value ? parseFloat(f.Latitude.value) : undefined,
+          Longitude: f.Longitude.value ? parseFloat(f.Longitude.value) : undefined
+        },
+        Organizer: {
+          Name: f.OrganizerName.value,
+          Contact: {
+            Email: f.OrganizerEmail.value,
+            Phone: f.OrganizerPhone.value
+          }
+        },
+        EventType: f.EventType.value,
+        Description: f.Description.value,
+        Wolke: f.Wolke.value,
+        Chatbegruenung: f.Chatbegruenung.value,
+        SocialMediaLinks: f.SocialMediaLinks.value,
+        EventStatus: {
+          HelpersNeededMinimum: f.HelpersNeededMinimum.value ? parseInt(f.HelpersNeededMinimum.value, 10) : undefined,
+          SpecialRequirements: f.SpecialRequirements.value
+        }
+      };
+      function clean(obj) {
+        if (Array.isArray(obj)) return obj.map(clean);
+        if (obj && typeof obj === 'object') {
+          return Object.fromEntries(Object.entries(obj).filter(([_,v]) => v!==undefined && v!==null && v!=='').map(([k,v])=>[k,clean(v)]));
+        }
+        return obj;
+      }
+      const cleanEvent = clean(event);
+      const json = JSON.stringify(cleanEvent, null, 2);
+      const subject = encodeURIComponent('Neues Event eintragen in: ' + event.Location);
+      const body = encodeURIComponent(json);
+      window.open(`mailto:robert@buendnis-ost.de?subject=${subject}&body=${body}`);
+    });
+  </script>
+</body>
+</html>
