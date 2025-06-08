@@ -5,18 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neues Event einreichen</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <form class="event-form" id="eventForm">
     <h2>Neues Event einreichen</h2>
+    <div id="map-select-container" style="margin: 16px 0 10px 0;">
+      <div id="map-select-map" style="height: 260px; border-radius: 7px; box-shadow: 0 1px 6px rgba(0,0,0,0.08);"></div>
+      <div style="font-size:0.95em; color:#256029; margin-top:4px;">Wähle einen Punkt auf der Karte aus. Die Koordinaten werden übernommen.</div>
+      <div style="margin-top:6px; font-size:0.97em; color:#256029; display: none;">
+        <label>Breitengrad <input name="Latitude" id="latInput" type="" step="any"></label>
+        <label>Längengrad <input name="Longitude" id="lngInput" type="" step="any"></label>
+      </div>
+    </div>
     <label>Ort <span style="color:#e53935">*</span> <input name="Location" required placeholder="z.B. Leipzig"></label>
     <div class="form-row">
       <div><label>Datum <span style="color:#e53935">*</span> <input type="date" name="Date" required value="2025-06-10"></label></div>
       <div><label>Uhrzeit <input type="time" name="Time" placeholder="14:00"></label></div>
-    </div>
-    <div class="form-row">
-      <div><label>Breitengrad <input name="Latitude" type="number" step="any" placeholder="z.B. 51.3397"></label></div>
-      <div><label>Längengrad <input name="Longitude" type="number" step="any" placeholder="z.B. 12.3731"></label></div>
     </div>
     <label>Veranstalter-Name <span style="color:#e53935">*</span> <input name="OrganizerName" required placeholder="z.B. Max Mustermann"></label>
     <label>Veranstalter-Email <span style="color:#e53935">*</span> <input name="OrganizerEmail" type="email" required placeholder="max@beispiel.de"></label>
@@ -28,20 +34,63 @@
     <label>Social Media Links <textarea name="SocialMediaLinks" placeholder="Ein Link pro Zeile"></textarea></label>
     <label>Helfer:innen benötigt (Minimum) <input name="HelpersNeededMinimum" type="number" min="1" required placeholder="z.B. 3"></label>
     <label>Material/Sonderbedarf <input name="SpecialRequirements" placeholder="z.B. Pavillon, Flyer"></label>
-    <button type="submit">Event als JSON an E-Mail-Client senden</button>
+    <button type="submit">Als E-Mail verschicken</button>
+    <button type="button" id="copyJsonBtn" class="copy-btn">Daten in Zwischenablage kopieren</button>
     <div class="info">Mit <span style='color:#e53935'>*</span> markierte Felder sind Pflichtfelder.<br>Das Event wird nicht automatisch gespeichert, sondern als JSON an deinen E-Mail-Client übergeben. Bitte prüfe die Daten und sende die Mail an das Orga-Team.</div>
   </form>
   <script>
+    // Leaflet Map für Geolocation-Auswahl
+    var map = L.map('map-select-map').setView([51.3397, 12.3731], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+    }).addTo(map);
+    var marker;
+    function setLatLng(lat, lng) {
+      document.getElementById('latInput').value = lat.toFixed(6);
+      document.getElementById('lngInput').value = lng.toFixed(6);
+      reverseGeocode(lat, lng);
+    }
+    function reverseGeocode(lat, lng) {
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=16&addressdetails=1`, {
+        headers: {
+          'User-Agent': 'WahlkampfEventTool/1.0 (kontakt@beispiel.de)'
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.address) {
+            const parts = data.address;
+            const addr = [
+              parts.road || '',
+              parts.house_number || '',
+              parts.postcode || '',
+              parts.city || parts.town || parts.village || parts.county || '',
+              parts.state || '',
+            ].filter(Boolean).join(', ');
+            document.querySelector('input[name="Location"]').value = addr;
+          }
+        })
+        .catch(err => console.error('Reverse geocoding failed:', err));
+    }
+    map.on('click', function(e) {
+      if (marker) map.removeLayer(marker);
+      marker = L.marker(e.latlng, {draggable:true}).addTo(map);
+      setLatLng(e.latlng.lat, e.latlng.lng);
+      marker.on('dragend', function(ev) {
+        var pos = ev.target.getLatLng();
+        setLatLng(pos.lat, pos.lng);
+      });
+    });
     document.getElementById('eventForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const f = e.target;
+      // Hole Koordinaten aus Marker oder Feldern
+      let lat = f.Latitude.value ? parseFloat(f.Latitude.value) : undefined;
+      let lng = f.Longitude.value ? parseFloat(f.Longitude.value) : undefined;
       const event = {
         Location: f.Location.value,
         Time: f.Date.value + (f.Time.value ? ('T' + f.Time.value) : ''),
-        Geolocation: {
-          Latitude: f.Latitude.value ? parseFloat(f.Latitude.value) : undefined,
-          Longitude: f.Longitude.value ? parseFloat(f.Longitude.value) : undefined
-        },
+        Geolocation: lat && lng ? { Latitude: lat, Longitude: lng } : undefined,
         Organizer: {
           Name: f.OrganizerName.value,
           Contact: {
@@ -71,6 +120,48 @@
       const subject = encodeURIComponent('Neues Event eintragen in: ' + event.Location);
       const body = encodeURIComponent(json);
       window.open(`mailto:robert@buendnis-ost.de?subject=${subject}&body=${body}`);
+    });
+    // Kopieren-Button Funktion
+    document.getElementById('copyJsonBtn').addEventListener('click', function() {
+      const f = document.getElementById('eventForm');
+      let lat = f.Latitude.value ? parseFloat(f.Latitude.value) : undefined;
+      let lng = f.Longitude.value ? parseFloat(f.Longitude.value) : undefined;
+      const event = {
+        Location: f.Location.value,
+        Time: f.Date.value + (f.Time.value ? ('T' + f.Time.value) : ''),
+        Geolocation: lat && lng ? { Latitude: lat, Longitude: lng } : undefined,
+        Organizer: {
+          Name: f.OrganizerName.value,
+          Contact: {
+            Email: f.OrganizerEmail.value,
+            Phone: f.OrganizerPhone.value
+          }
+        },
+        EventType: f.EventType.value,
+        Description: f.Description.value,
+        Wolke: f.Wolke.value,
+        Chatbegruenung: f.Chatbegruenung.value,
+        SocialMediaLinks: f.SocialMediaLinks.value,
+        EventStatus: {
+          HelpersNeededMinimum: f.HelpersNeededMinimum.value ? parseInt(f.HelpersNeededMinimum.value, 10) : undefined,
+          SpecialRequirements: f.SpecialRequirements.value
+        }
+      };
+      function clean(obj) {
+        if (Array.isArray(obj)) return obj.map(clean);
+        if (obj && typeof obj === 'object') {
+          return Object.fromEntries(Object.entries(obj).filter(([_,v]) => v!==undefined && v!==null && v!=='').map(([k,v])=>[k,clean(v)]));
+        }
+        return obj;
+      }
+      const cleanEvent = clean(event);
+      const json = JSON.stringify(cleanEvent, null, 2);
+      navigator.clipboard.writeText(json).then(() => {
+        document.getElementById('copyJsonBtn').textContent = 'Kopiert!';
+        setTimeout(() => {
+          document.getElementById('copyJsonBtn').textContent = 'JSON in Zwischenablage kopieren';
+        }, 1800);
+      });
     });
   </script>
 </body>
