@@ -8,18 +8,22 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-  <h2>Event Übersicht</h2>
   <div class="page-explanation">
     <p>
       Willkommen auf der Event-Übersicht für den Wahlkampf in Ostdeutschland! Hier findest du alle geplanten Aktionen und Veranstaltungen übersichtlich auf einer interaktiven Karte und in einem Kalender dargestellt. 
       <br><br>
       Die Farben im Kalender zeigen dir auf einen Blick, wo noch helfende Hände oder Material gebraucht werden. Fahre mit der Maus über einen Kalendereintrag, um mehr Details zu erfahren und die zugehörigen Orte auf der Karte hervorzuheben.
       <br><br>
-      Mach mit und unterstütze uns vor Ort – gemeinsam können wir viel bewegen!
     </p>
-    <div style="text-align:center; margin: 18px 0 32px 0;">
-      <a href="event-submit.html" class="help-btn event-einreichen">Neues Event einreichen</a></div>
   </div>
+  <div class="page-explanation">
+    <div style="text-align:center; margin: 18px 0 32px 0;">
+      Mach mit und unterstütze uns vor Ort – gemeinsam können wir viel bewegen!
+      <br>
+      <a href="event-submit.html" class="help-btn event-einreichen">Neues Event einreichen</a>
+    </div>
+  </div>
+  <h2>Event Übersicht</h2>
   <div id="map-and-info" style="display: flex; gap: 18px; align-items: flex-start; justify-content: center; flex-wrap: wrap;">
     <div id="map"></div>
     <div id="event-info" style="display:none; min-width:260px; max-width:340px; background:#fff; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.10); padding:18px 18px 12px 18px; border:1px solid #e0e0e0;"></div>
