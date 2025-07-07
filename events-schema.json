@@ -49,39 +49,12 @@
             },
             "required": ["Email"]
           },
-          "SocialMedia": {
-            "type": "object",
-            "properties": {
-              "Mastodon": {
-                "type": "string",
-                "format": "uri",
-                "description": "The Mastodon profile link of the organizer."
-              },
-              "Peertube": {
-                "type": "string",
-                "format": "uri",
-                "description": "The Peertube profile link of the organizer."
-              },
-              "Facebook": {
-                "type": "string",
-                "format": "uri",
-                "description": "The Facebook profile link of the organizer."
-              },
-              "Twitter": {
-                "type": "string",
-                "format": "uri",
-                "description": "The Twitter profile link of the organizer."
-              },
-              "Instagram": {
-                "type": "string",
-                "format": "uri",
-                "description": "The Instagram profile link of the organizer."
-              },
-              "Tiktok": {
-                "type": "string",
-                "format": "uri",
-                "description": "The TikTok profile link of the organizer."
-              }
+          "SocialMediaLinks": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri",
+              "description": "A link to a specific social media post about the event."
             }
           }
         },
@@ -97,39 +70,17 @@
         "description": "A link to additional event details."
       },
       "SocialMediaLinks": {
-        "type": "object",
-        "properties": {
-          "Mastodon": {
-            "type": "string",
-            "format": "uri",
-            "description": "A link to a specific Mastodon post about the event."
-          },
-          "Peertube": {
-            "type": "string",
-            "format": "uri",
-            "description": "A link to a specific Peertube video about the event."
-          },
-          "Facebook": {
-            "type": "string",
-            "format": "uri",
-            "description": "A link to a specific Facebook post about the event."
-          },
-          "Twitter": {
-            "type": "string",
-            "format": "uri",
-            "description": "A link to a specific Twitter post about the event."
-          },
-          "Instagram": {
-            "type": "string",
-            "format": "uri",
-            "description": "A link to a specific Instagram post about the event."
-          },
-          "Tiktok": {
-            "type": "string",
-            "format": "uri",
-            "description": "A link to a specific TikTok video about the event."
-          }
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "uri",
+          "description": "A link to a specific social media post or actor"
         }
+      },
+      "Website": {
+        "type": "string",
+        "format": "uri",
+        "description": "A link to the official website of the event."
       }
     },
     "required": ["Location", "Time", "Geolocation", "Organizer", "Description", "SocialMediaLinks"]
