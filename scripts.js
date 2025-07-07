@@ -1,9 +1,32 @@
+function ensureEventFields(event) {
+  if (!event.EventStatus) {
+    event.EventStatus = {
+      EventConfirmed: false,
+      ConfirmedHelpers: 0,
+      HelpersNeededMinimum: 1,
+      SpecialRequirements: ''
+    };
+  } else {
+    if (event.EventStatus.EventConfirmed === undefined) event.EventStatus.EventConfirmed = false;
+    if (event.EventStatus.ConfirmedHelpers === undefined) event.EventStatus.ConfirmedHelpers = 0;
+    if (event.EventStatus.HelpersNeededMinimum === undefined) event.EventStatus.HelpersNeededMinimum = 1;
+    if (event.EventStatus.SpecialRequirements === undefined) event.EventStatus.SpecialRequirements = '';
+  }
+  if (!event.EventType) event.EventType = 'Event';
+  if (!event.Chatbegruenung) event.Chatbegruenung = '';
+
+  return event;
+}
+
 // Events direkt per fetch laden
 fetch('events.json')
   .then(response => response.json())
   .then(events => {
     if (events.length === 0)
       throw new Error('Keine Events gefunden');
+
+    // Ensure all events have required fields
+    events = events.map(ensureEventFields);
     // Initialize map
     const map = L.map('map').setView([52.520008, 13.404954], 7);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

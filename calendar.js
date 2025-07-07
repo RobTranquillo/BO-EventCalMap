@@ -16,7 +16,34 @@ function getISOWeek(date) {
   return 1 + Math.round(((tempDate.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
 }
 
+// Helper function to ensure event has all required fields
+function ensureEventFields(event) {
+  // Ensure EventStatus exists with default values
+  if (!event.EventStatus) {
+    event.EventStatus = {
+      EventConfirmed: false,
+      ConfirmedHelpers: 0,
+      HelpersNeededMinimum: 1,
+      SpecialRequirements: ''
+    };
+  } else {
+    // Ensure all EventStatus subfields exist
+    if (event.EventStatus.EventConfirmed === undefined) event.EventStatus.EventConfirmed = false;
+    if (event.EventStatus.ConfirmedHelpers === undefined) event.EventStatus.ConfirmedHelpers = 0;
+    if (event.EventStatus.HelpersNeededMinimum === undefined) event.EventStatus.HelpersNeededMinimum = 1;
+    if (event.EventStatus.SpecialRequirements === undefined) event.EventStatus.SpecialRequirements = '';
+  }
+
+  // Ensure other optional fields exist
+  if (!event.EventType) event.EventType = 'Event';
+  if (!event.Chatbegruenung) event.Chatbegruenung = '';
+
+  return event;
+}
+
 function generateCalendar(events, startDate, endDate, container, showEventInfo) {
+  // Ensure all events have required fields
+  events = events.map(ensureEventFields);
   // Start- und Enddatum als Date-Objekte
   const start = new Date(startDate);
   start.setHours(0, 0, 0, 0);
